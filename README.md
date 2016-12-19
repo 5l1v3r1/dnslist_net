@@ -15,7 +15,7 @@ https://www.farsightsecurity.com/
 
 # Installation
 ```
-git clone https://github.com/zer0pwn/dnslist_net
+git clone https://github.com/zeropwn/dnslist_net
 chmod +x dnslist_net.py
 ```
 
