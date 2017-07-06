@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 from bs4 import BeautifulSoup
 import requests
-import time
+import sys
 import os
+from time import gmtime, strftime
 from cmd import Cmd
 class dnslist_net():
 	"""
@@ -45,60 +46,41 @@ class dnslist_net():
 					# append every host entry to hosts_retval
 					for host in hosts:
 						hosts_retval.append(host.string)
-		# if the list does not appear to be an index
 		else:
 			for host in hosts:
 				hosts_retval.append(host.string)
 		return hosts_retval
-		# well i guess ill space this with a useless comment :)
-		# hmu @zer0pwn on twitter for a chance to win absolutely nothing
-class ui(Cmd):
-	green = '\033[92m'
-	bold = '\033[1m'
-	end = '\033[0m'
-	dns_list = dnslist_net()
-	prompt = 'dnslist > '
-	intro = """
-	 _     __   ___ _____             _____
-	| \|\|(_ |   | (_  |          |\||_  | 
-	|_/| |__)|___|___) |    ___   | ||__ | 
 
-	     	 a dns mapping aid
+        
+def timestamp():
+        return strftime("%H:%M:%S", gmtime())
 
-	{0}{1}usage: lookup linksys.com{2}
+def hakz(r):
+        for result in r:
+                print("[+] {0}".format(result))
 
-	domains with many recorded entries will take 
-	a little bit longer than usual to process. do
-	not fret, this is normal
+def banner():
+        print("""\33[34m
+      _             _ _     _   
+   __| |_ __  ___  | (_)___| |_ 
+  / _` | '_ \/ __| | | / __| __|
+ | (_| | | | \__ \ | | \__ \ |_ 
+  \__,_|_| |_|___/ |_|_|___/\__|
+                    by \33[33m@zer0pwn\33[0m
+ """)
 
-	try using this tool recursively. for example,
-	timhortons.ca points to www.timhortons.ca. a
-	lookup of www.timhortons.ca returns its A records
-	>>>
-			[+]  a  165.160.13.20 
-			[+]  a  165.160.15.20
-	<<<
-
-			""".format(bold, green, end)
-	def do_lookup(self, target):
-		print(self.bold+self.green+"started at {0}".format(time.asctime())+self.end)
-		results = self.dns_list.lookup(target)
-		for r in results:
-			time.sleep(0.005)
-			print("[+] {0}".format(r))
-		print("\n")
-	def do_help(self, void):
-		print(self.intro)
-	def do_EOF(self, void):
-		return(True)
-	def do_clear(self, void):
-		os.system('clear')
-	def do_cls(self, void):
-		os.system('cls')
-	def do_exit(self, void):
-		return(True)
-
-
-if __name__ == "__main__":
-	ui = ui()
-	ui.cmdloop()
+#print(len(sys.argv))
+if(len(sys.argv) == 3 and sys.argv[1] == "lookup"):
+        arg0   = sys.argv[0]
+        option = sys.argv[1]
+        target = sys.argv[2]
+        DNSLIST = dnslist_net()
+        print("\n\33[32m[{0}] running lookup on {1}...\n".format(timestamp(), target))
+        banner()
+        result = DNSLIST.lookup(target)
+        hakz(result)
+        print("\n")
+        
+else:
+        banner()
+        print("\33[31musage:\33[0m {0} lookup google.com\n\n".format(sys.argv[0]))
