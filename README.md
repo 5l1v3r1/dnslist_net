@@ -1,4 +1,4 @@
-![](http://i.imgur.com/dAXiwac.png)
+![](http://i.imgur.com/2brZGDg.png)
 
 # dnslist_net
 - Written in Python 3
@@ -20,4 +20,3 @@ chmod +x dnslist_net.py
 ```
 
 # Usage
-![](http://i.imgur.com/LteJLcv.gif)
